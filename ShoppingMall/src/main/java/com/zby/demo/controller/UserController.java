@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -26,7 +29,11 @@ public class UserController {
         } else {
             user = userService.checkNameAndPass(name, pass);
             if (user != null) {
-                return ResultMessage.success("登录成功");
+                String uid = UUID.randomUUID().toString().replaceAll("-","");
+                Map<String , String> map = new HashMap<>();
+                map.put("name", user.getcName());
+                map.put("token", uid);
+                return ResultMessage.success("登录成功", map);
             } else {
                 return ResultMessage.error("账号密码输入错误，请重新输入");
             }

@@ -4,6 +4,23 @@ public class Product {
     private Long id;
     private String cName;
     private Double dPrice;
+    private Double dQuantity;
+
+    public Double getdPrice() {
+        return dPrice;
+    }
+
+    public void setdPrice(Double dPrice) {
+        this.dPrice = dPrice;
+    }
+
+    public Double getdQuantity() {
+        return dQuantity;
+    }
+
+    public void setdQuantity(Double dQuantity) {
+        this.dQuantity = dQuantity;
+    }
 
     public Long getId() {
         return id;
@@ -21,11 +38,4 @@ public class Product {
         this.cName = cName;
     }
 
-    public Double getfPrice() {
-        return dPrice;
-    }
-
-    public void setfPrice(Double fPrice) {
-        this.dPrice = fPrice;
-    }
 }

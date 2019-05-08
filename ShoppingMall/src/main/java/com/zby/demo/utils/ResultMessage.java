@@ -10,7 +10,7 @@ public class ResultMessage {
 
     }
     public ResultMessage (Object data) {
-        this.code = "200";
+        this.code = ResponseStatus.SUCCESS.getCode();
         this.data = data;
     }
     public ResultMessage (String code, String message, Object data) {
@@ -22,16 +22,29 @@ public class ResultMessage {
     public String data () {
         return getJsonResult(this.code, this.message, this.data);
     }
+    public static String data (Object data) {
+        return getJsonResult(ResponseStatus.SUCCESS.getCode(), null, data);
+    }
 
     public static String error (String message) {
-        return getJsonResult("999", message, null);
+        return getJsonResult(ResponseStatus.ERROR.getCode(), message, null);
     }
     public static String success (String message) {
-        return getJsonResult("200", message, null);
+        return getJsonResult(ResponseStatus.SUCCESS.getCode(), message, null);
+    }
+    public static String success (String message, Object data) {
+        return getJsonResult(ResponseStatus.SUCCESS.getCode(), message, data);
     }
     private static String getJsonResult (String code, String message, Object data) {
         ResultMessage result = new ResultMessage();
         result.code = code;
+        result.message = message;
+        result.data = data;
+        return new Gson().toJson(result);
+    }
+    private static String getJsonResult (ResponseStatus status, String message, Object data) {
+        ResultMessage result = new ResultMessage();
+        result.code = status.getCode();
         result.message = message;
         result.data = data;
         return new Gson().toJson(result);

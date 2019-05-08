@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zby.demo.dao.ProductDao">
+    <select id="getAll" resultType="com.zby.demo.model.Product">
+        select  * from Product
+    </select>
+    <insert id="addProduct" parameterType="com.zby.demo.model.Product" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Product (
+			cName,
+			dPrice,
+			dQuantity
+		) VALUES (
+			#{cName},
+			#{dPrice},
+			#{dQuantity}
+		);
+    </insert>
+    <update id="updateProduct" parameterType="com.zby.demo.model.Product">
+        update product
+        <set>
+            cName = #{cName},
+            dPrice = #{dPrice},
+            dQuantity = #{dQuantity}
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="delProduct" parameterType="java.lang.Long" >
+        delete from Product where id = #{id};
+    </delete>
+</mapper>
