@@ -1,31 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zby.demo.dao.ProductDao">
-    <select id="getAll" resultType="com.zby.demo.model.Product">
-        select  * from Product
-    </select>
-    <insert id="addProduct" parameterType="com.zby.demo.model.Product" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO Product (
-			cName,
-			dPrice,
-			dQuantity
-		) VALUES (
-			#{cName},
-			#{dPrice},
-			#{dQuantity}
-		);
-    </insert>
-    <update id="updateProduct" parameterType="com.zby.demo.model.Product">
-        update product
-        <set>
-            cName = #{cName},
-            dPrice = #{dPrice},
-            dQuantity = #{dQuantity}
-        </set>
-        where id = #{id}
-    </update>
-    <delete id="delProduct" parameterType="java.lang.Long" >
-        delete from Product where id = #{id};
-    </delete>
+  <resultMap id="BaseResultMap" type="com.zby.demo.model.Product">
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_img" jdbcType="VARCHAR" property="productImg" />
+    <result column="origin_price" jdbcType="DECIMAL" property="originPrice" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="product_desc" jdbcType="VARCHAR" property="productDesc" />
+    <result column="count_sum" jdbcType="INTEGER" property="countSum" />
+    <result column="product_size" jdbcType="VARCHAR" property="productSize" />
+    <result column="input_time" jdbcType="TIMESTAMP" property="inputTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    product_id, product_name, product_img, origin_price, price, product_desc, count_sum, product_size, 
+    input_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zby.demo.model.Product">
+    insert into product (product_id, product_name, product_img, 
+      origin_price, price, product_desc, 
+      count_sum, product_size, input_time, 
+      update_time)
+    values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productImg,jdbcType=DOUBLE}, 
+      #{originPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{productDesc,jdbcType=VARCHAR}, 
+      #{countSum,jdbcType=INTEGER}, #{productSize,jdbcType=VARCHAR}, #{inputTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zby.demo.model.Product">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productImg != null">
+        product_img,
+      </if>
+      <if test="originPrice != null">
+        origin_price,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="product_desc != null">
+        product_desc,
+      </if>
+      <if test="countSum != null">
+        count_sum,
+      </if>
+      <if test="productSize != null">
+        product_size,
+      </if>
+      <if test="inputTime != null">
+        input_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null">
+        #{productImg,jdbcType=DOUBLE},
+      </if>
+      <if test="originPrice != null">
+        #{originPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="product_desc != null">
+        #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="countSum != null">
+        #{countSum,jdbcType=INTEGER},
+      </if>
+      <if test="productSize != null">
+        #{productSize,jdbcType=VARCHAR},
+      </if>
+      <if test="inputTime != null">
+        #{inputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zby.demo.model.Product">
+    update product
+    <set>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null">
+        product_img = #{productImg,jdbcType=DOUBLE},
+      </if>
+      <if test="originPrice != null">
+        origin_price = #{originPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="product_desc != null">
+        product_desc = #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="countSum != null">
+        count_sum = #{countSum,jdbcType=INTEGER},
+      </if>
+      <if test="productSize != null">
+        product_size = #{productSize,jdbcType=VARCHAR},
+      </if>
+      <if test="inputTime != null">
+        input_time = #{inputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zby.demo.model.Product">
+    update product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_img = #{productImg,jdbcType=DOUBLE},
+      origin_price = #{originPrice,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      product_desc = #{productDesc,jdbcType=VARCHAR},
+      count_sum = #{countSum,jdbcType=INTEGER},
+      product_size = #{productSize,jdbcType=VARCHAR},
+      input_time = #{inputTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  
+    <select id="getProductList"  resultMap="BaseResultMap">
+    select 
+    *
+    from product
+  </select>
 </mapper>
