@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RequestMapping("/product")
+@RequestMapping("/front-product")
 @Controller
 public class FrontProductController {
 
