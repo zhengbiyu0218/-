@@ -40,8 +40,8 @@ public class ProductController {
 
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     @ResponseBody
-    public String delProduct (Long id, HttpServletRequest request) {
-        boolean success = productService.delProduct(id);
+    public String delProduct (String id, HttpServletRequest request) {
+        boolean success = productService.delProduct(Integer.valueOf(id));
         if (success) {
             return ResultMessage.success("删除商品成功");
         } else {
