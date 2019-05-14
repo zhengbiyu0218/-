@@ -15,17 +15,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAll() {
-        List list = productDao.getAll();
+        List list = productDao.getProductList();
         return list;
     }
 
     @Override
     public boolean updateProduct(Product product) {
         int result = 0;
-        if (product.getId() != null) {
-            result = productDao.updateProduct(product);
+        if (product.getProductId() != null) {
+            result = productDao.updateByPrimaryKeySelective(product);
         } else {
-            result = productDao.addProduct(product);
+            result = productDao.insert(product);
         }
         if ( result > 0) {
             return true;
@@ -35,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean delProduct(Long id) {
-        int result = productDao.delProduct(id);
+    public boolean delProduct(int productId) {
+        int result = productDao.deleteByPrimaryKey(productId);
         if ( result > 0) {
             return true;
         } else {
