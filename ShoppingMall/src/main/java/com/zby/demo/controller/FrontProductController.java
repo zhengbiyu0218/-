@@ -23,7 +23,6 @@ public class FrontProductController {
     @ResponseBody
     public String getAllProduct (HttpServletRequest request) {
         List<Product> list = frontProductService.getProductList();
-        
         return ResultMessage.data(list);
     }
 
@@ -31,9 +30,7 @@ public class FrontProductController {
     @RequestMapping(value = "/getProductById", method = RequestMethod.POST)
     @ResponseBody
     public String getProductById (String id, HttpServletRequest request) {
-    	System.out.println(id);
         Product p = frontProductService.getProductById(Integer.valueOf(id));
-        
         return ResultMessage.data(p);
     }
 }

@@ -1,13 +1,15 @@
 package com.zby.demo.model;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.sql.rowset.serial.SerialArray;
+
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
-public class Product {
+public class Product implements Serializable{
     private Integer productId;
 
     private String productName;
