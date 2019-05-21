@@ -25,7 +25,9 @@ public class ResultMessage {
     public static String data (Object data) {
         return getJsonResult(ResponseStatus.SUCCESS.getCode(), null, data);
     }
-
+    public static String denied () {
+        return getJsonResult(ResponseStatus.PERMISSIONDENIED.getCode(), "请登录后操作", null);
+    }
     public static String error (String message) {
         return getJsonResult(ResponseStatus.ERROR.getCode(), message, null);
     }
