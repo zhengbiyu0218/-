@@ -5,12 +5,14 @@ import com.zby.demo.dao.ProductDao;
 import com.zby.demo.dao.ShoppingCartInfoDao;
 import com.zby.demo.model.Product;
 import com.zby.demo.model.ShoppingCartInfo;
+import com.zby.demo.model.vo.CheckOrderVO;
 import com.zby.demo.model.vo.SCartVO;
 import com.zby.demo.service.FrontProductService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -152,6 +154,43 @@ public class FrontProductServiceImpl implements FrontProductService {
 			}
 		}
 		return "共"+pList.size()+"个产品，删除成功"+success+"个 失败"+faild+"个";
+	}
+
+	@Override
+	public CheckOrderVO checkShoppingCartList(String userId, String productId) {
+		System.out.println("userId="+userId+",productId="+productId);
+		int uId = Integer.valueOf(userId);
+		int pId;
+		List<String> pList =  Arrays.asList(productId.split(","));
+		SCartVO shop;
+		List<SCartVO> resultList = new ArrayList<>();
+		BigDecimal sum = BigDecimal.ZERO;
+		for (String s : pList) {
+			pId = Integer.valueOf(s);
+			ShoppingCartInfo sCart = shoppingCartInfoDao.selectCartByProductId(uId, pId);
+			Product pInfo = productDao.selectByPrimaryKey(pId);
+			shop = new SCartVO();
+			shop.setId(sCart.getId());
+			shop.setUserId(uId);
+			shop.setProductId(pId);
+			shop.setBuyCount(sCart.getBuyCount());
+			shop.setIsChecked(false);
+			
+			if (pInfo != null) {
+				shop.setProductName(pInfo.getProductName());
+				shop.setProductImg(pInfo.getProductImg());
+				shop.setProductPrice(pInfo.getPrice());
+				shop.setProductSize(pInfo.getProductSize());
+				resultList.add(shop);
+				
+				sum = sum.add(pInfo.getPrice().multiply(new BigDecimal(sCart.getBuyCount())));
+			}
+		}
+		CheckOrderVO result = new CheckOrderVO();
+		result.setCartList(resultList);
+		result.setSum(sum.toString());
+		
+		return result;
 	}
 
 }

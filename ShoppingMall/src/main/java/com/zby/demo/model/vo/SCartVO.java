@@ -1,10 +1,16 @@
 package com.zby.demo.model.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SCartVO {
+public class SCartVO implements Serializable{
 	
-    private Integer id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private Integer userId;
 
@@ -21,6 +27,17 @@ public class SCartVO {
     private String productImg;
     
     private boolean isChecked;
+    
+    private String sum;
+
+
+	public String getSum() {
+		return sum;
+	}
+
+	public void setSum(String sum) {
+		this.sum = sum;
+	}
 
 	public boolean getIsChecked() {
 		return isChecked;

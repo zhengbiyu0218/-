@@ -1,6 +1,7 @@
 package com.zby.demo.service;
 
 import com.zby.demo.model.Product;
+import com.zby.demo.model.vo.CheckOrderVO;
 import com.zby.demo.model.vo.SCartVO;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface FrontProductService {
 	String getShopCartSum(String userId);
 	
 	String deleteCartList(String userId, String productId);
+	
+	CheckOrderVO checkShoppingCartList(String userId, String productId);
 	
 }

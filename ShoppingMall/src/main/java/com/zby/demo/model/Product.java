@@ -10,7 +10,12 @@ import javax.sql.rowset.serial.SerialArray;
 import org.apache.ibatis.annotations.Mapper;
 
 public class Product implements Serializable{
-    private Integer productId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer productId;
 
     private String productName;
 

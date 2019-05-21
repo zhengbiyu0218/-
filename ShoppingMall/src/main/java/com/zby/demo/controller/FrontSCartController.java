@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zby.demo.model.vo.CheckOrderVO;
 import com.zby.demo.model.vo.SCartVO;
 import com.zby.demo.service.FrontProductService;
 import com.zby.demo.utils.ResultMessage;
@@ -47,6 +48,13 @@ public class FrontSCartController {
     @ResponseBody
     public String deleteCartList (String userId, String productId, HttpServletRequest request) {
         String result = frontProductService.deleteCartList(userId, productId);
+        return ResultMessage.data(result);
+    }
+    
+    @RequestMapping(value = "/checkOrder", method = RequestMethod.GET)
+    @ResponseBody
+    public String checkOrder (String userId, String productId, HttpServletRequest request) {
+        CheckOrderVO result = frontProductService.checkShoppingCartList(userId, productId);
         return ResultMessage.data(result);
     }
 }
